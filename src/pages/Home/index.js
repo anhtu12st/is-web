@@ -1,13 +1,24 @@
+import { useState } from 'react';
 import Styled from './styled';
 
 export function HomePage() {
+  const [image, setImage] = useState(null);
+
+  const handleOnUploadImage = event => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      setImage( URL.createObjectURL(img));
+    }
+  }
+
   return (
     <Styled.AppContainer>
       <Styled.ImagesContainer>
-        <img src="https://www.w3schools.com/css/img_chania.jpg" alt="image" />
+        <img src={image} alt="image" />
         <Styled.Button>Start Detect</Styled.Button>
         <img src="https://www.w3schools.com/css/img_chania.jpg" alt="image"/>
       </Styled.ImagesContainer>
+      <input type="file" onChange={handleOnUploadImage} placeholder="Load Image" />
       <Styled.Button>Load Image</Styled.Button>
       <div>
         <div>Camera IP</div>
