@@ -1,14 +1,19 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Styled from './styled';
 
 export function HomePage() {
   const [image, setImage] = useState(null);
+  const inputImage = useRef(null);
 
   const handleOnUploadImage = event => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
       setImage( URL.createObjectURL(img));
     }
+  }
+
+  const handleOnClickUploadButton = event => {
+    inputImage.current.click();
   }
 
   return (
@@ -18,8 +23,8 @@ export function HomePage() {
         <Styled.Button>Start Detect</Styled.Button>
         <img src="https://www.w3schools.com/css/img_chania.jpg" alt="image"/>
       </Styled.ImagesContainer>
-      <input type="file" onChange={handleOnUploadImage} placeholder="Load Image" />
-      <Styled.Button>Load Image</Styled.Button>
+      <input style={{display: 'none'}} ref={inputImage} type="file" onChange={handleOnUploadImage} placeholder="Load Image" />
+      <Styled.Button onClick={handleOnClickUploadButton}>Load Image</Styled.Button>
       <div>
         <div>Camera IP</div>
         <div style={{ width: 320, fontSize: 30, height: 60, border: '1px solid black', borderRadius: 8, textAlign: 'center', lineHeight: '60px' }}>

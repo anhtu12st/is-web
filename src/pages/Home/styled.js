@@ -18,6 +18,7 @@ const Button = styled.button`
 	font-size: 36px;
 	line-height: 42px;
 	color: #FFFEFE;
+	cursor: pointer;
 `;
 
 const ImagesContainer = styled.div`
