@@ -8,7 +8,7 @@ export function HomePage() {
   const handleOnUploadImage = event => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
-      setImage( URL.createObjectURL(img));
+      setImage(URL.createObjectURL(img));
     }
   }
 
@@ -19,11 +19,15 @@ export function HomePage() {
   return (
     <Styled.AppContainer>
       <Styled.ImagesContainer>
-        <img src={image} alt="image" />
+        <div style={{ flexBasis: "40%" }}>
+          <img src={image} alt="image" />
+        </div>
         <Styled.Button>Start Detect</Styled.Button>
-        <img src="https://www.w3schools.com/css/img_chania.jpg" alt="image"/>
+        <div style={{ flexBasis: "40%" }}>
+          <img src="https://www.w3schools.com/css/img_chania.jpg" alt="image" />
+        </div>
       </Styled.ImagesContainer>
-      <input style={{display: 'none'}} ref={inputImage} type="file" onChange={handleOnUploadImage} placeholder="Load Image" />
+      <input style={{ display: 'none' }} ref={inputImage} type="file" onChange={handleOnUploadImage} placeholder="Load Image" />
       <Styled.Button onClick={handleOnClickUploadButton}>Load Image</Styled.Button>
       <div>
         <div>Camera IP</div>

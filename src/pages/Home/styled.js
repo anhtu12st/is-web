@@ -26,7 +26,8 @@ const ImagesContainer = styled.div`
 	flex-direction: row;
 	align-items: center;
 	img {
-		flex: 1;
+		width: 100%;
+		height: auto;
 	}
 	${Button} {
 		background: #23D84D;
