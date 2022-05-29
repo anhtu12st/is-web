@@ -1,13 +1,20 @@
 import { useState, useRef } from 'react';
 import Styled from './styled';
+import axios from 'axios'
+import { ClipLoader } from 'react-spinners'
+
+
 
 export function HomePage() {
   const [image, setImage] = useState(null);
+  const [fileImage, setFileImage]=useState(null);
+  const [b664img, setImgString]= useState(null);
   const inputImage = useRef(null);
-
+  const [loading, setLoading]=useState(false);
   const handleOnUploadImage = event => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
+      setFileImage(img)
       setImage(URL.createObjectURL(img));
     }
   }
@@ -16,15 +23,43 @@ export function HomePage() {
     inputImage.current.click();
   }
 
+  const handleCNNDetect= () =>{
+    
+    const fd=new FormData();
+    fd.append('image', fileImage);
+    setLoading(true);
+    axios.post('http://localhost:5500/detectCNN', fd)
+    .then(res=>{
+      setLoading(false)
+      setImgString(res['data']);
+    });
+
+  }
+
+  const handleSVMDetect= () =>{
+    const fd=new FormData();
+    fd.append('image', fileImage);
+    setLoading(true);
+    axios.post('http://localhost:5500/detectSVM', fd)
+    .then(res=>{
+      setLoading(false);
+      setImgString(res['data']);
+    });
+  }
+
+
   return (
     <Styled.AppContainer>
       <Styled.ImagesContainer>
         <div style={{ flexBasis: "40%" }}>
           <img src={image} alt="image" />
         </div>
-        <Styled.Button>Start Detect</Styled.Button>
+        <Styled.Button onClick={handleCNNDetect}>CNN Detect</Styled.Button>
+        <Styled.Button onClick={handleSVMDetect}>SVM Detect</Styled.Button>
+
         <div style={{ flexBasis: "40%" }}>
-          <img src="https://www.w3schools.com/css/img_chania.jpg" alt="image" />
+          {loading ?  <ClipLoader color="#4A90E2" loading={loading} size={50} />: <img src={"data:image/png;base64," + b664img} alt="image" />}
+
         </div>
       </Styled.ImagesContainer>
       <input style={{ display: 'none' }} ref={inputImage} type="file" onChange={handleOnUploadImage} placeholder="Load Image" />
